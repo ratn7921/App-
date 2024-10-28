@@ -28,23 +28,25 @@ import Slider from '../../components/Home/slider';  // Ensure proper case sensit
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import PetListByCategory from '../../components/Home/PetListByCategory';
 import Colors from '../../constants/Colors';
+import { Link } from 'expo-router';
 // Keep this if it exists
 
 
 export default function Home() {
   return (
-    <ScrollView style={{ padding: 20, marginTop: 20 }}>
+    <ScrollView style={{ padding: 20, marginTop: 20,    marginBottom:10,
+    }}>
       <Header />
       <Slider />
       <PetListByCategory />  
 
-   <TouchableOpacity onPress={{}} style={styles.addnewpetContainer}>
+   <Link href={'/add-new-pet'} style={styles.addnewpetContainer}>
    <MaterialIcons name="pets" size={24} color="black" />
     <Text
     style={{
       fontFamily:'PlaywriteGBS'    }}
     >Add new pet</Text>
-   </TouchableOpacity>
+   </Link>
 
     </ScrollView>
   );
@@ -55,14 +57,17 @@ const styles = StyleSheet.create({
     display:'flex',
     flexDirection:'row',
     gap:10,
-    padding:50,
+    padding:20,
     alignItems:'center',
     marginTop:10,
+    marginBottom:10,
+    paddingBottom:10,
     backgroundColor:Colors.LIGHT_BLUE,
     borderWidth:1,
     // borderRadius:Colors.PRIMARY,
     borderStyle:'dashed',
-    justifyContent:'center'
+    justifyContent:'center',
+    textAlign:'center'
   }
 })
 

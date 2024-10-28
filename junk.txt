@@ -1,0 +1,831 @@
+
+// import { View, Text, Image, TextInput, StyleSheet, ScrollView } from 'react-native';
+// import React, { useEffect, useState } from 'react';
+// import { useNavigation } from 'expo-router';
+// import Colors from './../../constants/Colors';
+// import { TouchableOpacity } from 'react-native';
+// import {Picker} from '@react-native-picker/picker';
+// export default function AddNewPet() {
+//   const navigation = useNavigation();
+//  const [formData,setformData]=useState();
+//  const [gender,setgender]=useState();
+//   useEffect(() => {
+//     navigation.setOptions({
+//       headerTitle: 'Add New Pet',
+//     });
+//   }, [navigation]); // Ensure the navigation dependency is included
+
+//   const HandleInputChange=(fieldName,fieldValue)=>{
+//     console.log(fieldName,fieldValue)
+//     setformData(prev=>({
+//         ...prev,
+//         [fieldName]:fieldValue
+//     }))
+//   }
+
+//   return (
+//     <ScrollView>
+//     <View style={{ padding: 20 }}>
+//       <Text style={{ fontFamily: 'PlaywriteGBS', fontSize: 20 }}>Add New Pet</Text>
+
+//       <Image
+//         source={require('./../../assets/images/Addnew.png')}
+//         style={{
+//           width: 100,
+//           height: 100,
+//           borderRadius: 165,
+//           borderWidth: 1,
+//           borderColor: Colors.GRAY,
+//         }}
+//       />
+
+// <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet Name *</Text>
+//         <TextInput
+//           style={styles.input}
+//       onChangeText={(value)=>HandleInputChange('name',value)}
+// />
+//       </View>
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet Age *</Text>
+//         <TextInput
+//           style={styles.input}
+//       onChangeText={(value)=>HandleInputChange('age',value)}
+// />
+//       </View>
+//               <Picker
+//                   selectedValue={gender}
+//                   onValueChange={(itemValue, itemIndex) =>
+//                     setgender(itemValue)
+//                   }>
+//                   <Picker.Item label="Male" value="male" />
+//                   <Picker.Item label="Female" value="Female" />
+//               </Picker>
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet weight *</Text>
+//         <TextInput
+//           style={styles.input}
+//       onChangeText={(value)=>HandleInputChange('weight',value)}
+// />
+//       </View>
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet Breed *</Text>
+//         <TextInput
+//           style={styles.input}
+//       onChangeText={(value)=>HandleInputChange('breed',value)}
+// />
+//       </View>
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet Address *</Text>
+//         <TextInput
+//           style={styles.input}
+//       onChangeText={(value)=>HandleInputChange('address',value)}
+// />
+//       </View>
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet About *</Text>
+//         <TextInput
+//           style={styles.input}
+
+//           numberOfLines={5}
+//           multiline={true}
+//       onChangeText={(value)=>HandleInputChange('about',value)}
+// />
+//       </View>
+//   <TouchableOpacity style={styles.button}>
+//     <Text>Submint</Text>
+//   </TouchableOpacity>
+
+//       {/* Ensure to add more Text components for any other texts you want to display */}
+//       <View style={styles.infoContainer}>
+//         <Text>Please fill in the details for your pet.</Text>
+//       </View>
+//     </View>
+//     </ScrollView>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   inputContainer: {
+//     marginVertical: 5,
+//   },
+//   input: {
+//     padding: 9,
+//     backgroundColor: Colors.TEXT_LIGHT,
+//     borderRadius: 12,
+//     marginTop: 5, // Added marginTop for spacing
+//   },
+//   infoContainer: {
+//     marginTop: 20, // Optional: Add some space above this section
+//   },
+//   label:{
+//     marginVertical:5,
+//     fontFamily:'PlaywriteGBS'
+//   },
+//   button:{
+//     marginTop:5,
+//   padding:15,
+//   backgroundColor:Colors.PRIMARY,
+//   borderRadius:15,
+//   alignItems:'center'
+//   }
+// });
+
+// import { View, Text, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+// import React, { useEffect, useState } from 'react';
+// import { useNavigation } from 'expo-router';
+// import Colors from './../../constants/Colors';
+// import { Picker } from '@react-native-picker/picker';
+// import { db } from './../../config/FirebaseConfig';
+// import { collection, getDocs } from 'firebase/firestore';
+// import Category from './../../components/Home/Category';
+// import { doc } from 'firebase/firestore';
+
+// export default function AddNewPet() {
+//   const navigation = useNavigation();
+//   const [formData, setFormData] = useState({}); // Initialize as an empty object
+//   const [gender, setGender] = useState('');
+// const[categoryList,setCategoryList]=useState([]);
+// const [selectedCategory,setselectedCategory]=useState();
+//   useEffect(() => {
+//     navigation.setOptions({
+//       headerTitle: 'Add New Pet',
+//     });
+
+//     GetCategories();
+//   }, [navigation]);
+
+
+
+//   const GetCategories = async () => {
+//     const snapshot = await getDocs(collection(db, 'Category')); // Fetch the 'Category' collection
+//     const categories = []; // Temporary array to store fetched data
+//     snapshot.forEach((doc) => {
+//       categories.push(doc.data()); // Push the data from each document into the array
+//     });
+//     setCategoryList(categories=>[...categories,doc.data]); // Update the state with the fetched categories
+//   };
+
+//   const handleInputChange = (fieldName, fieldValue) => {
+//     console.log(fieldName, fieldValue);
+//     setFormData((prev) => ({
+//       ...prev,
+//       [fieldName]: fieldValue,
+//     }));
+//   };
+
+//   const handleSubmit = () => {
+//     // Handle form submission logic here
+//     console.log('Form Data:', formData);
+//     console.log('Gender:', gender);
+//   };
+
+//   return (
+//     <ScrollView contentContainerStyle={{ padding: 20 }}>
+//       <Text style={{ fontFamily: 'PlaywriteGBS', fontSize: 20 }}>Add New Pet</Text>
+
+//       <Image
+//         source={require('./../../assets/images/Addnew.png')}
+//         style={{
+//           width: 100,
+//           height: 100,
+//           borderRadius: 165,
+//           borderWidth: 1,
+//           borderColor: Colors.GRAY,
+//         }}
+//       />
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet Name *</Text>
+//         <TextInput
+//           style={styles.input}
+//           onChangeText={(value) => handleInputChange('name', value)}
+//         />
+//       </View>
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}> pet Category *</Text>
+//         <Picker
+//           selectedValue={selectedCategory}
+//           onValueChange={(itemValue) => {
+//             setselectedCategory(itemValue);
+//             handleInputChange('Category', itemValue); // Fixing the value change handling
+//           }}
+//           style={styles.picker}
+//         >
+//             {categoryList.map((Category,index)=>(
+//           <Picker.Item key={index} label={Category.name} value={Category.name} />
+
+//             ))}
+
+//         </Picker>
+//       </View>
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet Age *</Text>
+//         <TextInput
+//           style={styles.input}
+//           onChangeText={(value) => handleInputChange('age', value)}
+//         />
+//       </View>
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Gender *</Text>
+//         <Picker
+//           selectedValue={gender}
+//           onValueChange={(itemValue) => {
+//             setGender(itemValue);
+//             handleInputChange('sex', itemValue); // Fixing the value change handling
+//           }}
+//           style={styles.picker}
+//         >
+//           <Picker.Item label="Select Gender" value="" />
+//           <Picker.Item label="Male" value="male" />
+//           <Picker.Item label="Female" value="female" />
+//         </Picker>
+//       </View>
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet Weight *</Text>
+//         <TextInput
+//           style={styles.input}
+//           onChangeText={(value) => handleInputChange('weight', value)}
+//         />
+//       </View>
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet Breed *</Text>
+//         <TextInput
+//           style={styles.input}
+//           onChangeText={(value) => handleInputChange('breed', value)}
+//         />
+//       </View>
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>Pet Address *</Text>
+//         <TextInput
+//           style={styles.input}
+//           onChangeText={(value) => handleInputChange('address', value)}
+//         />
+//       </View>
+
+//       <View style={styles.inputContainer}>
+//         <Text style={styles.label}>About Your Pet *</Text>
+//         <TextInput
+//           style={styles.input}
+//           numberOfLines={5}
+//           multiline={true}
+//           onChangeText={(value) => handleInputChange('about', value)}
+//         />
+//       </View>
+
+//       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+//         <Text style={styles.buttonText}>Submit</Text>
+//       </TouchableOpacity>
+
+//       <View style={styles.infoContainer}>
+//         <Text>Please fill in the details for your pet.</Text>
+//       </View>
+//     </ScrollView>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   inputContainer: {
+//     marginVertical: 5,
+//   },
+//   input: {
+//     padding: 9,
+//     backgroundColor: Colors.TEXT_LIGHT,
+//     borderRadius: 12,
+//     marginTop: 5,
+//   },
+//   infoContainer: {
+//     marginTop: 20,
+//   },
+//   label: {
+//     marginVertical: 5,
+//     fontFamily: 'PlaywriteGBS',
+//   },
+//   button: {
+//     marginTop: 15,
+//     padding: 15,
+//     backgroundColor: Colors.PRIMARY,
+//     borderRadius: 15,
+//     alignItems: 'center',
+//   },
+//   buttonText: {
+//     color: 'white', // Ensure the text is readable against the button background
+//     fontWeight: 'bold',
+//   },
+//   picker: {
+//     height: 50,
+//     width: '100%', // Ensure the picker takes the full width
+//     marginTop: 5,
+//     backgroundColor: Colors.TEXT_LIGHT, // Optional: Match the input style
+//     borderRadius: 12,
+//   },
+// });
+
+
+// import { View, Text, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+// import React, { useEffect, useState } from 'react';
+// import { useNavigation } from 'expo-router';
+// import Colors from './../../constants/Colors';
+// import { Picker } from '@react-native-picker/picker';
+// import { db } from './../../config/FirebaseConfig';
+// import { collection, getDocs } from 'firebase/firestore';
+// import * as ImagePicker from 'expo-image-picker';
+// import { Pressable } from 'react-native';
+
+// export default function AddNewPet() {
+//     const navigation = useNavigation();
+//     const [formData, setFormData] = useState({
+//         name: '',
+//         age: '',
+//         weight: '',
+//         breed: '',
+//         address: '',
+//         about: '',
+//         Category: '',
+//     });
+//     const [gender, setGender] = useState('');
+//     const [categoryList, setCategoryList] = useState([]);
+//     const [selectedCategory, setSelectedCategory] = useState('');
+//     const [image, setImage] = useState();
+//     useEffect(() => {
+//         navigation.setOptions({
+//             headerTitle: 'Add New Pet',
+//         });
+//         GetCategories();
+//     }, [navigation]);
+
+//     const GetCategories = async () => {
+//         try {
+//             const snapshot = await getDocs(collection(db, 'Category'));
+//             const categories = snapshot.docs.map(doc => doc.data());
+//             setCategoryList(categories);
+//         } catch (error) {
+//             console.error("Error fetching categories: ", error);
+//         }
+//     };
+
+//     /**
+//      * used to pick image from gallery
+//      */
+//     const imagePicker = async () => {
+//         let result = await ImagePicker.launchImageLibraryAsync({
+//             mediaTypes: ImagePicker.MediaTypeOptions.Images,
+//             allowsEditing: true,
+//             aspect: [4, 3],
+//             quality: 1,
+//         });
+
+//         console.log(result);
+
+//         if (!result.canceled) {
+//             setImage(result.assets[0].uri);
+//         }
+//     }
+//     const handleInputChange = (fieldName, fieldValue) => {
+//         console.log(fieldName, fieldValue);
+//         setFormData((prev) => ({
+//             ...prev,
+//             [fieldName]: fieldValue,
+//         }));
+//     };
+
+//     const handleSubmit = () => {
+//         if (!formData.name || !formData.age || !gender || !formData.weight || !formData.breed || !formData.address || !formData.about || !selectedCategory) {
+//             alert("Please fill in all required fields.");
+//             return;
+//         }
+//         console.log('Form Data:', formData);
+//         console.log('Gender:', gender);
+//         // Proceed with form submission (e.g., saving to Firestore)
+//     };
+
+//     const onSubmit = () => {
+//         console.log(formData);
+//     }
+
+//     return (
+//         <ScrollView contentContainerStyle={{ padding: 20 }}>
+//             <Text style={{ fontFamily: 'PlaywriteGBS', fontSize: 20 }}>Add New Pet</Text>
+
+//             <Pressable onPress={imagePicker}>
+//                 <Image
+//                     source={require('./../../assets/images/Addnew.png')}
+//                     style={{
+//                         width: 100,
+//                         height: 100,
+//                         borderRadius: 165,
+//                         borderWidth: 1,
+//                         borderColor: Colors.GRAY,
+//                     }}
+//                 />
+//             </Pressable>
+
+//             <View style={styles.inputContainer}>
+//                 <Text style={styles.label}>Pet Name *</Text>
+//                 <TextInput
+//                     style={styles.input}
+//                     placeholder="Enter pet name"
+//                     onChangeText={(value) => handleInputChange('name', value)}
+//                 />
+//             </View>
+//             <View style={styles.inputContainer}>
+//                 <Text style={styles.label}>Pet Category *</Text>
+//                 <Picker
+//                     selectedValue={selectedCategory}
+//                     onValueChange={(itemValue) => {
+//                         setSelectedCategory(itemValue);
+//                         handleInputChange('Category', itemValue);
+//                     }}
+//                     style={styles.picker}
+//                 >
+//                     {categoryList.map((Category, index) => (
+//                         <Picker.Item key={index} label={Category.name} value={Category.name} />
+//                     ))}
+//                 </Picker>
+//             </View>
+//             <View style={styles.inputContainer}>
+//                 <Text style={styles.label}>Pet Age *</Text>
+//                 <TextInput
+//                     style={styles.input}
+//                     placeholder="Enter pet age"
+//                     onChangeText={(value) => handleInputChange('age', value)}
+//                 />
+//             </View>
+
+//             <View style={styles.inputContainer}>
+//                 <Text style={styles.label}>Gender *</Text>
+//                 <Picker
+//                     selectedValue={gender}
+//                     onValueChange={(itemValue) => {
+//                         setGender(itemValue);
+//                         handleInputChange('sex', itemValue);
+//                     }}
+//                     style={styles.picker}
+//                 >
+//                     <Picker.Item label="Select Gender" value="" />
+//                     <Picker.Item label="Male" value="male" />
+//                     <Picker.Item label="Female" value="female" />
+//                 </Picker>
+//             </View>
+
+//             <View style={styles.inputContainer}>
+//                 <Text style={styles.label}>Pet Weight *</Text>
+//                 <TextInput
+//                     style={styles.input}
+//                     placeholder="Enter pet weight"
+//                     onChangeText={(value) => handleInputChange('weight', value)}
+//                 />
+//             </View>
+
+//             <View style={styles.inputContainer}>
+//                 <Text style={styles.label}>Pet Breed *</Text>
+//                 <TextInput
+//                     style={styles.input}
+//                     placeholder="Enter pet breed"
+//                     onChangeText={(value) => handleInputChange('breed', value)}
+//                 />
+//             </View>
+
+//             <View style={styles.inputContainer}>
+//                 <Text style={styles.label}>Pet Address *</Text>
+//                 <TextInput
+//                     style={styles.input}
+//                     placeholder="Enter pet address"
+//                     onChangeText={(value) => handleInputChange('address', value)}
+//                 />
+//             </View>
+
+//             <View style={styles.inputContainer}>
+//                 <Text style={styles.label}>About Your Pet *</Text>
+//                 <TextInput
+//                     style={styles.input}
+//                     placeholder="Tell us about your pet"
+//                     numberOfLines={5}
+//                     multiline={true}
+//                     onChangeText={(value) => handleInputChange('about', value)}
+//                 />
+//             </View>
+
+//             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+//                 <Text style={styles.buttonText}>Submit</Text>
+//             </TouchableOpacity>
+
+//             <View style={styles.infoContainer}>
+//                 <Text>Please fill in the details for your pet.</Text>
+//             </View>
+//         </ScrollView>
+//     );
+// }
+
+// const styles = StyleSheet.create({
+//     inputContainer: {
+//         marginVertical: 5,
+//     },
+//     input: {
+//         padding: 9,
+//         backgroundColor: Colors.TEXT_LIGHT,
+//         borderRadius: 12,
+//         marginTop: 5,
+//     },
+//     infoContainer: {
+//         marginTop: 20,
+//         alignItems: 'center'
+//     },
+//     label: {
+//         marginVertical: 5,
+//         fontFamily: 'PlaywriteGBS',
+//     },
+//     button: {
+//         marginTop: 15,
+//         padding: 15,
+//         backgroundColor: Colors.PRIMARY,
+//         borderRadius: 15,
+//         alignItems: 'center',
+//     },
+//     buttonText: {
+//         color: 'white',
+//         fontWeight: 'bold',
+//     },
+//     picker: {
+//         height: 50,
+//         width: '100%',
+//         marginTop: 5,
+//         backgroundColor: Colors.TEXT_LIGHT,
+//         borderRadius: 12,
+//     },
+// });
+
+
+
+
+
+
+
+
+import { View, Text, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from 'expo-router';
+import Colors from './../../constants/Colors';
+import { Picker } from '@react-native-picker/picker';
+import { db, storage } from './../../config/FirebaseConfig'; // Ensure storage is imported
+import { collection, getDocs, setDoc, doc } from 'firebase/firestore'; // Import setDoc and doc for saving data
+import { ref, uploadBytes } from 'firebase/storage'; // Import uploadBytes for image upload
+import * as ImagePicker from 'expo-image-picker';
+
+export default function AddNewPet() {
+  const navigation = useNavigation();
+  const [formData, setFormData] = useState({
+    name: '',
+    age: '',
+    weight: '',
+    breed: '',
+    address: '',
+    about: '',
+    Category: '',
+  });
+  const [gender, setGender] = useState(''); // Gender state if needed
+  const [categoryList, setCategoryList] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'Add New Pet',
+    });
+    GetCategories();
+  }, [navigation]);
+
+  const GetCategories = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, 'Category'));
+      const categories = snapshot.docs.map(doc => doc.data());
+      setCategoryList(categories);
+    } catch (error) {
+      console.error("Error fetching categories: ", error);
+    }
+  };
+
+  const imagePicker = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const handleInputChange = (fieldName, fieldValue) => {
+    setFormData((prev) => ({
+      ...prev,
+      [fieldName]: fieldValue,
+    }));
+  };
+
+  const isFormValid = () => {
+    return formData.name && formData.age && formData.weight && formData.breed && formData.address && formData.about && selectedCategory;
+  };
+
+  const UploadImage = async () => {
+    if (!image) return null; // No image selected
+    const response = await fetch(image);
+    const blobImage = await response.blob();
+    const storageRef = ref(storage, `PetAdopt/${formData.name}-${Date.now()}`); // Unique name for each pet image
+    await uploadBytes(storageRef, blobImage); // Upload image to Firebase Storage
+    return storageRef.fullPath; // Return the path to the uploaded image
+  };
+
+  // const SaveFormData = async (imageUrl) => {
+  //   const docId = Date.now().toString();
+  //   try {
+  //     await setDoc(doc(db, 'Pets', docId), {
+  //       ...formData,
+  //       imageUrl: imageUrl,
+  //       username: 'Sample User', // Replace with actual user data if available
+  //       email: 'user@example.com', // Replace with actual user data if available
+  //       userImage: 'path/to/user/image.jpg', // Replace with actual user data if available
+  //       id: docId,
+  //     });
+
+  const SaveFormData = async (imageUrl) => {
+    const docId = Date.now().toString(); // Unique ID based on the current time
+    try {
+      await setDoc(doc(db, 'Pets', docId), {
+        ...formData,            // Spread the form data into the document
+        imageUrl: imageUrl,      // URL for the image uploaded
+        username: {}, // Replace with actual username
+        email: 'user@example.com', // Replace with actual user email
+        userImage: 'path/to/user/image.jpg', // Replace with actual user image
+        id: docId,               // Unique ID for the document
+      });
+      console.log('Document successfully written!');
+    } catch (error) {
+      console.error('Error writing document: ', error);
+    }
+  };
+  
+  //   } catch (error) {
+  //     console.error("Error saving form data: ", error);
+  //   }
+  // };
+
+  const handleSubmit = async () => {
+    if (!isFormValid()) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const imagePath = await UploadImage(); // Upload the image
+    if (imagePath) {
+      await SaveFormData(imagePath); // Save the form data including the image URL
+    }
+
+    // You can add navigation or further logic after saving the form data
+    console.log('Form Data:', formData);
+    console.log('Gender:', gender);
+    console.log('Image Path:', imagePath); // Log image path for verification
+  };
+
+  return (
+    <ScrollView contentContainerStyle={{ padding: 20 }}>
+      <Text style={{ fontFamily: 'PlaywriteGBS', fontSize: 20 }}>Add New Pet</Text>
+
+      <Pressable onPress={imagePicker}>
+        <Image
+          source={image ? { uri: image } : require('./../../assets/images/Addnew.png')}
+          style={{
+            width: 100,
+            height: 100,
+            borderRadius: 165,
+            borderWidth: 1,
+            borderColor: Colors.GRAY,
+          }}
+        />
+      </Pressable>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Pet Name *</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter pet name"
+          onChangeText={(value) => handleInputChange('name', value)}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Pet Category *</Text>
+        <Picker
+          selectedValue={selectedCategory}
+          onValueChange={(itemValue) => {
+            setSelectedCategory(itemValue);
+            handleInputChange('Category', itemValue);
+          }}
+          style={styles.picker}
+        >
+          <Picker.Item label="Select Category" value="" />
+          {categoryList.map((category, index) => (
+            <Picker.Item key={index} label={category.name} value={category.name} />
+          ))}
+        </Picker>
+      </View>
+
+      {/* Additional input fields */}
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Age *</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter pet age"
+          keyboardType="numeric"
+          onChangeText={(value) => handleInputChange('age', value)}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Weight *</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter pet weight"
+          keyboardType="numeric"
+          onChangeText={(value) => handleInputChange('weight', value)}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Breed *</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter pet breed"
+          onChangeText={(value) => handleInputChange('breed', value)}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Address *</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your address"
+          onChangeText={(value) => handleInputChange('address', value)}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>About *</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Tell us about your pet"
+          multiline
+          numberOfLines={4}
+          onChangeText={(value) => handleInputChange('about', value)}
+        />
+      </View>
+
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  inputContainer: {
+    marginVertical: 5,
+  },
+  input: {
+    padding: 9,
+    backgroundColor: Colors.TEXT_LIGHT,
+    borderRadius: 12,
+    marginTop: 5,
+  },
+  label: {
+    marginVertical: 5,
+    fontFamily: 'PlaywriteGBS',
+  },
+  button: {
+    marginTop: 15,
+    padding: 15,
+    backgroundColor: Colors.PRIMARY,
+    borderRadius: 15,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  picker: {
+    height: 50,
+    width: '100%',
+    marginTop: 5,
+    backgroundColor: Colors.TEXT_LIGHT,
+    borderRadius: 12,
+  },
+});
