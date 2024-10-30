@@ -130,6 +130,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAuth, useUser } from '@clerk/clerk-expo';
 import { useNavigation } from 'expo-router';
 
+
 export default function Profile() {
   const { user } = useUser();
   const navigation = useNavigation();
@@ -152,7 +153,7 @@ export default function Profile() {
       id: 2,
       name: 'Favorites',
       icon: 'heart',
-      path: '/(tabs)/favorites', // Remove (tabs) if not necessary
+      path: '/favourate', // Remove (tabs) if not necessary
     },
     {
       id: 3,
@@ -176,6 +177,7 @@ export default function Profile() {
     }
     navigation.navigate(menu.path);
   };
+  navigation.navigate("user-post");
 
   return (
     <View style={styles.container}>
@@ -202,6 +204,8 @@ export default function Profile() {
           </TouchableOpacity>
         )}
       />
+
+
     </View>
   );
 }
