@@ -14,8 +14,8 @@ import { db } from '../../config/FirebaseConfig'; // Ensure you import your Fire
 export default function PetDetails() {
   const pet = useLocalSearchParams();
   const navigation = useNavigation();
-const {user}=useUser();
-const router=useRouter();
+  const { user } = useUser();
+  const router = useRouter();
   useEffect(() => {
     navigation.setOptions({
       headerTransparent: true,
@@ -23,47 +23,48 @@ const router=useRouter();
     });
   }, [navigation]);
 
-  const InitiateChat=async ()=>{
-    const docId1=user?.primaryEmailAddress?.emailAddress+'_'+pet?.email;
-    const docId2=pet?.email+'_'+user?.primaryEmailAddress?.emailAddress;
-    const q=query(collection(db,'Chat'),where('id','in',[docId1,docId2]));
-    const querySnapshot=await getDocs(q);
-    querySnapshot.forEach(doc=>{
+  const InitiateChat = async () => {
+    const docId1 = user?.primaryEmailAddress?.emailAddress + '_' + pet?.email;
+    const docId2 = pet?.email + '_' + user?.primaryEmailAddress?.emailAddress;
+    const q = query(collection(db, 'Chat'), where('id', 'in', [docId1, docId2]));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(doc => {
       console.log(doc.data());
-      // router.push({
-      //   pathname:'/Chat',
-      //   params:{id:doc.id}
-      // })
-    })
-    if (querySnapshot.docs?.length==0  ) {
-      await setDoc(doc(db,'Chat',docId1),{
-        id:docId1,
-        users:[
-{
-  email:user?.primaryEmailAddress?.emailAddress,
-  imageUrl:user?.imageUrl,
-  name:user?.fullName
-},
-{
-  email:pet?.email,
-  imageUrl:pet?.userImage,
-  name:pet?.username
-}
-        ]
+      router.push({
+        pathname: '/Chat',
+        params: { id: doc.id }
       })
+    })
+    if (querySnapshot.docs?.length == 0) {
+      await setDoc(doc(db, 'Chat', docId1), {
+        id: docId1,
+        users: [
+          {
+            email: user?.primaryEmailAddress?.emailAddress,
+            imageUrl: user?.imageUrl,
+            name: user?.fullName
+          },
+          {
+            email: pet?.email,
+            imageUrl: pet?.userImage,
+            name: pet?.username
+          }
+        ],
+        userIds:[user?.primaryEmailAddress?.emailAddress,pet?.email]
+      });
 
       router.push({
-        pathname:'/Chat',
-        params:{id:docId1}
+        pathname: '/Chat',
+        params: { id: docId1 }
       })
     }
 
   }
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView 
-        style={{ flex: 1 }} 
-        contentContainerStyle={{ padding: 2 }} 
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ padding: 2 }}
         showsVerticalScrollIndicator={false}
       >
         <PetInfo pet={pet} />
@@ -74,9 +75,9 @@ const router=useRouter();
       </ScrollView>
 
       <View style={styles.bottomContainer}>
-        <TouchableOpacity 
-        onPress={InitiateChat}
-        style={styles.adoptBtn}>
+        <TouchableOpacity
+          onPress={InitiateChat}
+          style={styles.adoptBtn}>
           <Text style={styles.adoptBtnText}>Adopt me</Text>
         </TouchableOpacity>
       </View>

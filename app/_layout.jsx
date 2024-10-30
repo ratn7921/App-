@@ -29,34 +29,35 @@ const tokenCache = {
 }
 
 export default function RootLayout() {
-  
+
   const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
-useFonts({
-  'PlaywriteGBS':require('./../assets/fonts/PlaywriteGBS-Regular.ttf'),
-  'PlaywriteGBS-Light':require('./../assets/fonts/PlaywriteGBS-Light.ttf'),
-  'PlaywriteGBS-Italic':require('./../assets/fonts/PlaywriteGBS-Italic.ttf')
+  useFonts({
+    'PlaywriteGBS': require('./../assets/fonts/PlaywriteGBS-Regular.ttf'),
+    'PlaywriteGBS-Light': require('./../assets/fonts/PlaywriteGBS-Light.ttf'),
+    'PlaywriteGBS-Italic': require('./../assets/fonts/PlaywriteGBS-Italic.ttf')
 
-})
+  })
   return (
-    <ClerkProvider 
-    tokenCache={tokenCache} 
-     publishableKey={publishableKey}>
+    <ClerkProvider
+      tokenCache={tokenCache}
+      publishableKey={publishableKey}>
 
-    <Stack>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="(tabs)" 
-      options={{
-        headerShown:false
-      }}
-      />
-      <Stack.Screen name="login/index"
-      options={{
-        headerShown:false
-      }}
-      />
+      <Stack>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(tabs)"
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen name="login/index"
+          options={{
+            headerShown: false
+          }}
+        />
+
       </Stack>
 
-      </ClerkProvider>
+    </ClerkProvider>
 
   );
 }

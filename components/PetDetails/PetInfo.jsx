@@ -35,6 +35,7 @@ import MarkFav from '../MarkFav';
 export default function PetInfo({ pet }) {
   return (
     <View>
+      
       <Image
         source={{ uri: pet.imageUrl }}
         style={{
