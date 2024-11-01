@@ -13,13 +13,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.Ratnakar.getyourpet"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.ratnakar14.get_your_pet"
     },
     "web": {
       "bundler": "metro",
@@ -30,10 +35,14 @@
       "expo-router",
       "expo-font",
       "expo-image-picker"
-     
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "28ded273-411b-493d-86e1-42cf1f3d4877"
+      }
     }
   }
 }
